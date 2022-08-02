@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-// const Talker = require('./Middlewares/Talker');
 const fs = require('fs');
+const generateToken = require('./Middlewares/generateToken');
 
 const app = express();
 app.use(bodyParser.json());
@@ -29,6 +29,7 @@ app.get('/talker/:id', (req, res) => {
 
   res.status(200).json(talkerId);
 });
+app.post('/login', generateToken);
 
 app.listen(PORT, () => {
   console.log('Online');
