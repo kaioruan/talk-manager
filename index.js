@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const fs = require('fs');
 const generateToken = require('./Middlewares/generateToken');
+const { emailValidation, passwordValidation } = require('./Middlewares/LoginValidation');
 
 const app = express();
 app.use(bodyParser.json());
@@ -29,7 +30,7 @@ app.get('/talker/:id', (req, res) => {
 
   res.status(200).json(talkerId);
 });
-app.post('/login', generateToken);
+app.post('/login', emailValidation, passwordValidation, generateToken);
 
 app.listen(PORT, () => {
   console.log('Online');
