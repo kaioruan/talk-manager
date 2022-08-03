@@ -37,6 +37,16 @@ app.post('/login', emailValidation, passwordValidation, generateToken);
 
 app.post('/talker', tokenValidation, nameAgeValidation, talkValidation, rateValidation, newTalker);
 
+app.delete('/talker/:id', tokenValidation, async (req, res) => {
+  const { id } = req.params;
+  const response = fs.readFileSync('talker.json', 'utf8');
+  const result = JSON.parse(response);
+  const newResult = result.filter((r) => r.id !== Number(id));
+  fs.writeFileSync('./talker.json', JSON.stringify(newResult));
+
+  res.status(204).send('');
+});
+
 app.listen(PORT, () => {
   console.log('Online');
 });
