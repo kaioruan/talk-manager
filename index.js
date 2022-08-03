@@ -18,6 +18,14 @@ app.get('/', (_request, response) => {
   response.status(HTTP_OK_STATUS).send();
 });
 
+app.get('/talker/search', tokenValidation, (req, res) => {
+  const { q } = req.query;
+  const response = fs.readFileSync('talker.json', 'utf8');
+  const result = JSON.parse(response);
+  const filteredTalker = result.filter((r) => r.name.includes(q));
+  res.status(200).json(filteredTalker);
+});
+
 app.get('/talker', (_req, res) => {
   const response = fs.readFileSync('talker.json', 'utf8');
   const result = JSON.parse(response);
